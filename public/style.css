@@ -109,12 +109,13 @@ margin: 0;
   background-color:#8bcdcd;
   color: #1d2124;
   margin: 6px auto;
+    margin-left: 2%;
   border-radius: 12px;
-  width:90%;
+   width: fit-content;
   box-shadow: 1px 1px 3px #212529;
 }
 .x1{
-display: inline;
+display: inline-block;
 font-weight: 700;
 font-size: 15px;
 color: #212529;
@@ -135,7 +136,6 @@ display: inline;
 font-weight: 700;
 font-size: 16px;
 color:#f6f5f1;
-
 padding: 0 4px;
 }
 .upcoming{
@@ -215,7 +215,8 @@ width:100%;
   background-color:#e6739f;
   color: #1d2124;
   margin: 6px auto;
- width: 90%;
+  margin-left: 2%;
+  width: fit-content;
   border-radius: 12px;
   box-shadow: 1px 1px 3px #212529;
 }
@@ -285,8 +286,7 @@ height: 10%;
 text-align: center;
   }
 .events{
-   width: 100%;
-
+   width: fit-content;
 }
 .button1,.button2,.input3,.input1,.input2{
   height: 35px;
