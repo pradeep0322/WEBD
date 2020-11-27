@@ -1,0 +1,51 @@
+<%-include("header")-%>
+  <div class="top">
+    <h6 class="heading">Hi, <%=usr.username%>!, It's <%=day%>
+<a class="logout" href="/">logout</a>
+    </h6>
+  </div>
+    <!-- ///////////////////////////////////////////////////////// -->
+    <div class="today">
+      <h6 class="t1">TODAY'S LIST</h6>
+      <div class="input">
+        <form action="/<%=usr.username%>" method="post">
+        <input class="input1" type="text" name="titem"  placeholder="..buy groceries at 7pm....." autocomplete="off" required>
+        <button class="button1" type="submit" >Add new task</button>
+      </form>
+    </div>
+
+    <%for(var i=0;i<usr.today_list.length;i++){%>
+    <form action="/<%=usr.username%>" method="post">
+      <div class="items">
+        <button class="x1" name="tindex" value="<%=i%>">X</button>
+        <p class="task"><%=usr.today_list[i]%></p>
+      </div>
+    </form>
+    <%}%>
+    </div>
+    <!-- ///////////////////////////////////////////////// -->
+    <div class="upcoming" >
+        <h6 class="t2">UPCOMING EVENTS</h6>
+      <div>
+        <form action="/<%=usr.username%>" method="post">
+          <input class="input2" type="text" name="fitem" autocomplete="off" required placeholder="..trip to goa...">
+          <input class="input3" type="date" name="dt" required>
+          <button class="button2" type="submit">Add new event</button>
+        </form>
+      </div>
+      <%for(var i=0;i<usr.future_list.length;i++){%>
+      <form action="/<%=usr.username%>" method="post">
+        <div class="events">
+          <button class="x2" style="display:inline;" name="findex" value="<%=i%>">X</button>
+          <%var dt=usr.future_list[i].date%>
+          <p class="date"><%=dt.getDate()%>/<%=dt.getMonth()+1%>/<%=dt.getFullYear()%></p>
+          <p class="event"><%=usr.future_list[i].item%></p>
+        </div>
+      </form>
+      <%}%>
+    </div>
+
+<p class="Copyright">@2020 created by Pradeep Panchal</p>
+    <!-- ///////////////////////////////////////////////////////// -->
+
+<%-include("footer")-%>
