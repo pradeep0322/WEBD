@@ -95,9 +95,7 @@ body {
   padding: 5px;
   margin: 0;
 }
-.a{
-  float: right;
-}
+
 .btn {
   display: inline-block;
   color: #fff;
@@ -184,7 +182,8 @@ font-size: 13px;
   box-shadow: 2px 0px 4px #1d2124;
 }
 .material-icons{
-font-size: 20px;
+font-size: 15px;
+padding-top:5px;
 }
 
 .x1 {
@@ -237,7 +236,10 @@ font-weight: bold;
   margin: auto;
   max-width: 200px;
 }
-
+.a{
+  float: right;
+  padding: 0;
+}
 @media only screen and (max-width: 1000px) {
 
   .input1,.input2,.input4,.input3,.input5 {
