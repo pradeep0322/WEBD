@@ -1,0 +1,24 @@
+<%-include("header")-%>
+<%-include("sidebar")-%>
+<!-- ///////////////////////////////////////// -->
+<div class="notes">
+  <h6 class="H1">YOUR NOTES</h6>
+  <div>
+    <form action="/<%=usr.username%>/notes" method="post">
+      <input class="input4" type="text" name="title" autocomplete="off" required maxlength="30" placeholder="title">
+      <input class="input5" type="text" name="disc" autocomplete="off" required placeholder="note...">
+      <button class="button1" type="submit">Add a note</button>
+    </form>
+  </div>
+  <%for(var i=0;i<usr.Notes.length;i++){%>
+  <form action="/<%=usr.username%>/notes" method="post">
+    <div class="items">
+      <button class="x1" name="Xindex" value="<%=i%>"><i class="material-icons">delete</i></button>
+      <p class="note"> <b class="title"> "<%=usr.Notes[i].title%>"</b>
+         : <%=usr.Notes[i].disc%></p>
+    </div>
+  </form>
+  <%}%>
+        </div>
+
+<%-include("footer")-%>

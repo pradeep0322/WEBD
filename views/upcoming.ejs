@@ -1,0 +1,26 @@
+<%-include("header")-%>
+<%-include("sidebar")-%>
+ <!-- /////////////////////////////////// -->
+
+<div class="upcoming" >
+    <h6 class="H1">UPCOMING EVENTS</h6>
+  <div>
+    <form action="/<%=usr.username%>/upcoming" method="post">
+<input class="input2" type="text" name="item" autocomplete="off" required placeholder="type here...">
+<input class="input3" type="date" name="date" value="2022-01-08" required>
+<button class="button1" type="submit">Add new event</button>
+</form>
+</div>
+<%for(var i=0;i<usr.future_list.length;i++){%>
+<form action="/<%=usr.username%>/upcoming" method="post">
+<div class="items">
+<%var dt=usr.future_list[i].date%>
+  <button class="x1" name="Xindex" value="<%=i%>"><i class="material-icons">delete</i></button>
+  <p class="note"><b class="title">"<%=dt.getDate()%>/<%=dt.getMonth()+1%>/<%=dt.getFullYear()%>"</b>
+        : <%=usr.future_list[i].item%></p>
+</div>
+</form>
+<%}%>
+</div>
+
+<%-include("footer")-%>

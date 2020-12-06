@@ -1,13 +1,29 @@
-<%-include("header")-%>
-  <div class="jumbotron jumbotron-fluid">
-    <div class="container">
-      <h1>ERROR</h1>
-      <h2 style="color:red;"><%=error%></h2>
-      <p class="lead">pRoblem? pleaSe__tRy__aGain!</p>
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToDoList</title>
+  <link rel="stylesheet" href="homestyle.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+
+
+<!-- ////////////////////////////////////////////////////////////// -->
+<div class="home">
+  <div class="start">
+    <%=error%>
+  </div>
+    <div class="box">
       <form action="/" method="get">
-        <button class="btn btn-secondary btn-lg" type="submit">Try Again</button>
+        <button class="btn" type="submit">Please try again</button>
       </form>
     </div>
 
-  </div>
-<%-include("footer")-%>
+</div>
+
+
+</body>
+</html>

@@ -5,44 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ToDoList</title>
   <link rel="stylesheet" href="homestyle.css">
-  <link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
 
-    <button class="login" type="button" onclick="myFunction1()" name="button">log in</button>
-    <button class="signin" type="button" onclick="myFunction2()" name="button">sign up</button>
 
-<div class="start">
-  Stay organize,      <br>
-              Stay creative
-</div>
-    <div class="login_page">
+<!-- ////////////////////////////////////////////////////////////// -->
+<div class="home">
+  <div class="start">
+    Stay organize, Stay creative
+  </div>
+  
+    <div class="box">
       <form action="/login" method="post">
         <input class="input" name="lusername" placeholder="username" autocomplete="off">
         <input class="input" type="password" name="lpassword" placeholder="password" autocomplete="off">
-        <button class="button1" type="submit">Log in</button>
+        <button class="btn" type="submit">Log in</button>
       </form>
     </div>
-      <div class="signin_page">
+
+      <div class="box">
         <form action="/signup" method="post">
           <input class="input" name="susername" placeholder="username" autocomplete="off">
           <input class="input" type="password" name="spassword" placeholder="password" autocomplete="off">
-          <button class="button2" type="submit">Sign up</button>
+          <button class="btn" type="submit">Sign up</button>
         </form>
       </div>
-      <div class="start">
-      The to do list to organize work & life
-      </div>
-<script>
-  var x=document.querySelector(".login_page");
-  var y=document.querySelector(".signin_page");
-  function myFunction1() {
-      y.style.display="none";
-      x.style.display="block";
-}
-function myFunction2() {
-    x.style.display="none";
-    y.style.display="block";
-}
-</script>
-  <%-include("footer")-%>
+        <h5>Can add/delete/highlight/check items in today's list.</h5>
+        <h5>Can add/delete upcoming event with date.</h5>
+        <h5>Can add/delete notes with title and discription.</h5>
+        <h5>Can see live weather by providing cityname.</h5>
+        <h6>@Created by Pradeep Panchal</h6>
+</div>
+
+
+</body>
+</html>

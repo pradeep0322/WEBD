@@ -1,0 +1,25 @@
+<%-include("header")-%>
+<%-include("sidebar")-%>
+<!-- ///////////////////////////////////////////////// -->
+<div class="today">
+  <h6 class="H1">TODAY'S LIST</h6>
+  <form action="/<%=usr.username%>/today" method="post">
+    <input class="input1" type="text" name="item" placeholder="type here..." required autocomplete="off">
+    <button class="button1" type="submit">Add new task</button>
+  </form>
+  <%for(var i=0;i<usr.today_list.length;i++){%>
+  <form action="/<%=usr.username%>/today" method="post">
+    <div class="items">
+      <button class="x1" name="Hindex" value="<%=i%>"><i class="material-icons">star</i></button>
+      <button class="x1" name="Cindex" value="<%=i%>"><i class="material-icons">check_box</i></button>
+      <button class="x1" name="Xindex" value="<%=i%>"><i class="material-icons">delete</i></button>
+      <%var H=usr.today_list[i].highlight%>
+      <%var C=usr.today_list[i].checked%>
+      <p class="task<%=H%> C<%=C%>"><%=usr.today_list[i].item%></p>
+
+    </div>
+  </form>
+  <%}%>
+    </div>
+
+<%-include("footer")-%>

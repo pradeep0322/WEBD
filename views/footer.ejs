@@ -1,3 +1,21 @@
+<!-- ///////////////////////////////////////// -->
 
-</body>
-</html>
+  <p class="Copyright">@Created by Pradeep Panchal</p>
+
+
+<!-- ////////////////////////////////// -->
+   <script>
+   var city = document.querySelector(".cityName");
+   var btn1 = document.querySelector(".location-btn");
+   btn1.onclick = function() {
+     city.style.display = "block";
+   }
+   window.onclick = function(event) {
+  if(event.target == city) {
+    city.style.display = "none";
+  }
+}
+   </script>
+
+   </body>
+   </html>
