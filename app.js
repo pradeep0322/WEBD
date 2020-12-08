@@ -45,7 +45,6 @@ const user = mongoose.model('user', userSchema);
 app.get("/", function(req, res) {
   res.render("home");
 });
-
 ////////////////////////////////////////////////////
 app.post("/signup", function(req, res) {
   if (req.body.susername === "" || req.body.spassword === "") {
@@ -63,7 +62,7 @@ app.post("/signup", function(req, res) {
             error: "username already exist"
           });
         } else {
-          if ((req.body.spassword).length < 5) {
+          if ((req.body.spassword).length < 6) {
             res.render("failure", {
               error: "password should be more than 5 charactors"
             });
@@ -71,7 +70,7 @@ app.post("/signup", function(req, res) {
             const newuser = new user({
               username: req.body.susername,
               password: md5(req.body.spassword),
-              today_list:[{item:"item:req.body.item", highlight:0,checked:0}],
+              today_list:[{item:"you can highlight/delete/check this item.", highlight:0,checked:1}],
               cityName:"Delhi"
             });
             newuser.save();
@@ -159,7 +158,6 @@ app.post("/:username/today", function(req, res) {
   });
 });
 /////////////////////////////////////////////
-//
 app.post("/:username/upcoming", function(req, res) {
     user.findOne({
     username: req.params.username
@@ -180,7 +178,7 @@ app.post("/:username/upcoming", function(req, res) {
       }
 founduser.save();
 
-/////////////////////////////////////
+/////////////////////////////////////////////////
   getWeather(founduser.cityName).then((data) => {
         res.render("upcoming", {
           usr: founduser,
@@ -228,7 +226,7 @@ async function getWeather(city) {
     let temp=Wdata.main.temp;
     let description=Wdata.weather[0].description;
     let humidity=Wdata.main.humidity;
-    let ans="weather is currently "+description+" with temperature "+temp+" Celcius and humidity "+humidity+ "% at ";
+    let ans="Weather is currently "+description+" with temperature "+temp+" Celcius and humidity "+humidity+ "% at ";
     return ans;
 }
 ////////////////////////////////
