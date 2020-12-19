@@ -7,22 +7,26 @@
   <title>ToDoList</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="/style.css">
-
 </head>
 
 <body>
   <div class="top">
-    <h3 class="heading"><i class="material-icons">account_circle</i> <%=usr.username%>!
+    <h5 class="heading"><i class="material-icons">account_circle</i> <%=usr.username%>
       <a class="logout" href="/"> log out</a>
-    </h3>
-    <p class="weather"><b class="title"><%=weather%></b>
-      <button class="location location-btn"><%=usr.cityName%><i class="material-icons">add_location</i></button>
-    </p>
+    </h5>
+
+    <div class="weather">
+      <form action="/<%=usr.username%>/weatherData" method="post">
+        <button class="refresh" type="submit"><i class="material-icons">autorenew</i></button>
+        <p class="wdata"><%=usr.weatherData%></p>
+      </form>
+      <button class="location location-btn">change city<i class="material-icons">add_location</i></button>
+    </div>
   </div>
   <!-- ///////////////////////////// -->
   <div class="cityName">
-    <form action="/<%=usr.username%>/today" method="post">
+    <form action="/<%=usr.username%>/weatherData" method="post">
       <input class="input1 city" type="text" name="cityName" placeholder="Enter valid cityname" required>
-      <button class="location" type="submit"><i class="material-icons" style="font-size:48px;">autorenew</i></button>
+      <button class="location" type="submit">Change</button>
     </form>
   </div>

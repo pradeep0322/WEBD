@@ -1,30 +1,28 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const app = express();
 const https = require("https");
+const ejs = require("ejs");
+const mongoose = require("mongoose");
+const fetch=require("node-fetch");
+const md5 = require("md5");
+const app = express();
+const passport=require("passport");
+const findOrCreate = require('mongoose-findorcreate');
+////////////////////////////////////////////////////////////////////////////////
+app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-
-
-/////////////
-const fetch=require("node-fetch");
-////////////////////
-const md5 = require("md5");
-////////////////
-const ejs = require("ejs");
-app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
-///////////////////
-const mongoose = require("mongoose");
 mongoose.connect("mongodb+srv://pradeep_22:panchal_22@cluster0.j1m9y.mongodb.net/userDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
-///////////////////
+
 const userSchema = new mongoose.Schema({
   username: String,
   password: String,
+  googleId: String,
   today_list: [{
   item:String,
   highlight:Number,
@@ -38,22 +36,82 @@ const userSchema = new mongoose.Schema({
     title:String,
     disc:String
   }],
-  cityName:String
+  cityName:String,
+  weatherData:String
 });
+
 const user = mongoose.model('user', userSchema);
-///////////////////////////////
+////////////////////////////////////////////oauth20 authenticattion using google
+
+app.use(passport.initialize());
+userSchema.plugin(findOrCreate);
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+passport.deserializeUser(function(id, done) {
+  user.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+passport.use(new GoogleStrategy({
+    clientID: "1036886791345-5gooufjj7gd0mhge9dipp9lqglch19b9.apps.googleusercontent.com",
+    clientSecret: "OXjbiMqc5xTS6-Cxaelt5rfc",
+    callbackURL: "http://localhost:3000/auth/google/todoApp"
+      // userProfileURL:"http://www.googleapis.com/oauth2/v3/userinfo"
+  },
+
+  function(accessToken, refreshToken, profile, done) {
+    // console.log(profile);
+        user.findOne({
+            googleId: profile.id
+        }, function(err, User) {
+            if (err) {
+                return done(err);
+            }
+            if (!User) {
+                User = new user({
+                    username: profile.displayName,
+                    googleId:profile.id,
+                    cityName:"Delhi",
+                    weatherData:"Weather is currently haze with temperature 19 Celcius and humidity 37% at Delhi"
+                });
+                User.save(function(err) {
+                    if (err) console.log(err);
+                    return done(err, User);
+                });
+            } else {
+                //found user. Return
+                return done(err, User);
+            }
+        });
+    }
+));
+app.get('/auth/google',passport.authenticate('google', { scope: ['profile','email'] }));
+app.get('/auth/google/todoApp',passport.authenticate('google', { failureRedirect: '/' }),
+    function(req, res) {
+            res.render("today", {
+              usr:req.user,
+              day: DAY()
+            });
+    });
+////////////////////////////////////////////////////////////////////////////////
 app.get("/", function(req, res) {
   res.render("home");
 });
-////////////////////////////////////////////////////
-app.post("/signup", function(req, res) {
-  if (req.body.susername === "" || req.body.spassword === "") {
+app.get("/register",function(req,res){
+    res.render("register");
+});
+
+////////////////////////////////////////////////////////////////////////////////
+app.post("/register", function(req, res) {
+  if (req.body.username === "" || req.body.password === "") {
     res.render("failure", {
       error: "username or password should'nt be empty"
     });
   } else {
     user.findOne({
-      username: req.body.susername
+      username: req.body.username
     }, function(err, founduser) {
       if (err) console.log(err);
       else {
@@ -62,48 +120,42 @@ app.post("/signup", function(req, res) {
             error: "username already exist"
           });
         } else {
-          if ((req.body.spassword).length < 6) {
+          if ((req.body.password).length < 6) {
             res.render("failure", {
               error: "password should be more than 5 charactors"
             });
           } else {
             const newuser = new user({
-              username: req.body.susername,
-              password: md5(req.body.spassword),
-              today_list:[{item:"you can highlight/delete/check this item.", highlight:0,checked:1}],
-              cityName:"Delhi"
+              username: req.body.username,
+              password: md5(req.body.password),//////store hashcode of password for security
+              cityName:"Delhi",/////default cityName for weatherData
+              weatherData:"Weather is currently haze with temperature 19 Celcius and humidity 37% at Delhi"
             });
             newuser.save();
-            getWeather(newuser.cityName).then((data) => {
                   res.render("today", {
                     usr: newuser,
-                    day: fun1(),
-                    weather: data
+                    day: DAY()
                   });
-            });
           }
         }
       }
     });
   }
 });
-/////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 app.post("/login", function(req, res) {
   user.findOne({
-    username: req.body.lusername
+    username: req.body.username
   }, function(err, founduser) {
     if (err) console.log(err);
     else {
       if (founduser) {
-        if (founduser.password === md5(req.body.lpassword)) {
-          getWeather(founduser.cityName).then((data) => {
-                res.render("today", {
+        if (founduser.password === md5(req.body.password)) {
+              res.render("today", {
                   usr: founduser,
-                  day: fun1(),
-                  weather: data
+                  day: DAY()
                 });
-          });
-        } else {
+                } else {
           res.render("failure", {
             error: "incorrect password"
           });
@@ -116,13 +168,33 @@ app.post("/login", function(req, res) {
     }
   });
 });
-//////////////////////
+
+//////////////////////////////////function for shorting events by date specified
 function sortbydate(a,b){
   var dateA=new Date(a.date).getTime();
   var dateB=new Date(b.date).getTime();
   return dateA >= dateB ? 1 : -1;
 }
-///////////////////////////////
+///////////////////post request for refreshing weatherData and changing cityName
+app.post("/:username/weatherData", function(req, res) {
+  user.findOne({username:req.params.username},function(err,founduser){
+  if(err) console.log(err);
+  else{
+    if(req.body.cityName){
+    founduser.cityName=req.body.cityName;
+  }
+    getWeather(founduser.cityName).then((data) => {
+      founduser.weatherData=data;
+      founduser.save();
+          res.render("today", {
+            usr: founduser,
+            day: DAY()
+          });
+    });
+  }
+  });
+});
+////////////////////////////////////////////////////////////////////////////////
 app.post("/:username/today", function(req, res) {
     user.findOne({
     username: req.params.username
@@ -143,21 +215,15 @@ app.post("/:username/today", function(req, res) {
         var x=founduser.today_list[req.body.Cindex].checked;
        founduser.today_list[req.body.Cindex].checked=(x+1)%2;
       }
-      if(req.body.cityName){
-      founduser.cityName=req.body.cityName;
-      }
       founduser.save();
-  getWeather(founduser.cityName).then((data) => {
         res.render("today", {
           usr: founduser,
-          day: fun1(),
-          weather: data
+          day: DAY()
         });
-  });
     }
   });
 });
-/////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 app.post("/:username/upcoming", function(req, res) {
     user.findOne({
     username: req.params.username
@@ -172,25 +238,15 @@ app.post("/:username/upcoming", function(req, res) {
       if(req.body.Xindex){
         founduser.future_list.splice(req.body.Xindex, 1);
       }
-      if(req.body.cityName){
-      founduser.cityName=req.body.cityName;
-
-      }
 founduser.save();
-
-/////////////////////////////////////////////////
-  getWeather(founduser.cityName).then((data) => {
         res.render("upcoming", {
           usr: founduser,
-          day: fun1(),
-          weather: data
+          day: DAY()
         });
-  });
     }
   });
 });
-///////////////////////////////////////////////////
-
+////////////////////////////////////////////////////////////////////////////////
 app.post("/:username/notes", function(req, res) {
     user.findOne({
     username: req.params.username
@@ -203,21 +259,15 @@ app.post("/:username/notes", function(req, res) {
       if(req.body.Xindex){
         founduser.Notes.splice(req.body.Xindex, 1);
       }
-      if(req.body.cityName){
-      founduser.cityName=req.body.cityName;
-      }
       founduser.save();
-  getWeather(founduser.cityName).then((data) => {
         res.render("notes", {
           usr: founduser,
-          day: fun1(),
-          weather: data
+          day: DAY()
         });
-  });
     }
   });
 });
-/////////////////////////////////////
+//////////////////////////////function for weather data using openweathermap API
 async function getWeather(city) {
     const weather = await fetch(
     "https://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid=8a82db8d6312a6c85216829fe5dd0aa8"
@@ -226,11 +276,11 @@ async function getWeather(city) {
     let temp=Wdata.main.temp;
     let description=Wdata.weather[0].description;
     let humidity=Wdata.main.humidity;
-    let ans="Weather is currently "+description+" with temperature "+temp+" Celcius and humidity "+humidity+ "% at ";
+    let ans="Weather is currently "+description+" with temperature "+temp+" Celcius and humidity "+humidity+ "% at "+city;
     return ans;
 }
-////////////////////////////////
-function fun1() {
+////////////////////////////////////////////////////////////////////////////////
+function DAY() {
   var day;
   switch (new Date().getDay()) {
     case 0:
@@ -256,7 +306,7 @@ function fun1() {
   }
   return day;
 }
-///////////////////////
+////////////////////////////////////////////////////////////////////////////////
 let port = process.env.PORT;
 if (port == null || port == "") {
   port = 3000;

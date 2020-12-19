@@ -44,7 +44,7 @@ body {
 
 .heading {
   display: inline-block;
-  color: #f9f7f7;
+  color: black;
   padding: 7px;
   text-align: center;
   font-weight: 700;
@@ -53,8 +53,8 @@ body {
 }
 .logout {
   position: absolute;
-  font-size: 80%;
-  font-weight: 600;
+  font-size: 70%;
+  font-weight: 400;
   color: #f9f7f7;
   text-align: center;
   text-decoration: none;
@@ -63,10 +63,9 @@ body {
 }
 
 .logout:hover {
-  color: #fff;
+  color: black;
   text-decoration: none;
   background-color: #f9f7f7;
-  text-shadow: 1px 1px 6px black;
 }
 .weather {
   display: inline-block;
@@ -77,15 +76,25 @@ body {
   font-weight: 500;
   margin: 0;
 }
-.location {
+.wdata{
+  display:inline;
+  padding:1px;
+  margin:0;
+  box-shadow: 1px 1px 3px black;
+}
+.location,.refresh {
+  display: inline;
   border: none;
-  font-weight: bold;
   background-color: transparent;
   letter-spacing: 2px;
 }
 
-.location:hover {
+.location:hover,.refresh:hover {
   color: white;
+}
+.location-btn{
+  position: absolute;
+  right: 0;
 }
 .t1 {
   display: block;
@@ -176,10 +185,12 @@ font-size: 13px;
 .items {
   display: block;
   margin: 0px ;
-  padding: 10px ;
-}
-.items:hover{
-  box-shadow: 2px 0px 4px #1d2124;
+  padding: 2px ;
+  box-shadow: 0px 1px 4px #1d2124;
+  width: fit-content;
+  border-radius: 5px;
+  margin: 6px;
+  font-size: 90%;
 }
 .material-icons{
 font-size: 20px;
@@ -199,17 +210,14 @@ font-size: 20px;
 .x1:hover {
   color: black;
 }
-.title{
-  letter-spacing: 1px;
-  box-shadow: 1px 1px 3px black;
-}
+
 .task0, .task1,.note{
   display: inline;
 margin: 5px;
 padding: 0;
 color: #393e46;
 font-size: 80%;
-font-weight: bold;
+font-weight: 550;
 }
 .task1 {
   background-color: yellow;

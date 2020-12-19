@@ -1,44 +1,51 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ToDoList</title>
+  <title>ToDoApp</title>
   <link rel="stylesheet" href="homestyle.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
+
 <body>
 
 
-<!-- ////////////////////////////////////////////////////////////// -->
-<div class="home">
-  <div class="start">
-    Stay organize, Stay creative
-  </div>
-
+  <!-- ////////////////////////////////////////////////////////////// -->
+  <div class="home">
+    <div class="start">
+      Stay organize, Stay creative
+    </div>
     <div class="box">
+      <a class="google-btn" href="/auth/google">
+        Continue with Google Account
+      </a>
+      <div class="or">
+      </div>
       <form action="/login" method="post">
-        <input class="input" name="lusername" placeholder="username" autocomplete="off">
-        <input class="input" type="password" name="lpassword" placeholder="password" autocomplete="off">
+        <input class="input" name="username" placeholder="username" autocomplete="off">
+        <input class="input" type="password" name="password" placeholder="password" autocomplete="off">
         <button class="btn" type="submit">Log in</button>
       </form>
+      <h5>don't have an account?
+        <a href="/register">Register</a>
+      </h5>
+
     </div>
 
-      <div class="box">
-        <form action="/signup" method="post">
-          <input class="input" name="susername" placeholder="username" autocomplete="off">
-          <input class="input" type="password" name="spassword" placeholder="password" autocomplete="off">
-          <button class="btn" type="submit">Sign up</button>
-        </form>
-      </div>
-        <h5>Can add/delete/highlight/check items in today's list.</h5>
-        <h5>Can add/delete upcoming event with date.</h5>
-        <h5>Can add/delete notes with title and discription.</h5>
-        <h5>Can see live weather by providing cityname.</h5>
-        <p class="Copyright">@Created by Pradeep Panchal
-        <a href="  https://github.com/pradeep0322/todolist">https://github.com/pradeep0322/todolist</a></p>
-</div>
+    <div class="or">
+    </div>
+    <h5>Can add/delete/highlight/check task in today's list.</h5>
+    <h5>Can add/delete upcoming event with date.</h5>
+    <h5>Can add/delete notes with title and discription.</h5>
+    <h5>Can see live weather by providing cityname.</h5>
+    <h6>Created by Pradeep Panchal
+      <a href="  https://github.com/pradeep0322/todolist">https://github.com/pradeep0322/todolist</a>
+    </h6>
+  </div>
 
 
 </body>
+
 </html>

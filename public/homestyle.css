@@ -24,53 +24,67 @@ body{
   font-weight: 900;
   color:#e84a5f;
 }
-li{
-  font-size: 80%;
-  margin: 3px;
-  width: fit-content;
-  letter-spacing: 1px;
-  color: #393e46;
-}
+
 .box{
   display: block;
   width:300px;
-  padding: 10px;
   margin: 20px auto;
-  /* box-shadow: 1px 1px 9px black; */
-  border-radius: 10px;
 }
-.input{
-    display: block;
-    width: 100%;
-    padding: 5px;
-    margin: 5px 0;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-      border-radius: 10px;
+
+.google-btn{
+display: block;
+width: 90%;
+margin: 10px auto;
+padding: 5px;
+color: #fff;
+text-align: center;
+background-color: #458bce;
+border: none;
+text-decoration: none;
+letter-spacing: 2px;
+box-shadow: 1px 1px 5px black;
 }
-.input:hover{
-    box-shadow: 2px 0px 4px #1d2124;
+.google-btn:hover{
+  font-weight: bold;
+  box-shadow: 3px 3px 9px black;
+}
+.or{
+  margin: 30px 0;
+  border-bottom: 1px solid #458bce;
 }
 .btn {
-  display: inline-block;
+  display: inline;
   color: #fff;
-  width: 100%;
-  text-align: left;
+  width: fit-content;
+  text-align: center;
   background-color: #e84a5f;
   font-size: 80%;
   font-weight: 700;
   border: none;
   padding: 5px;
   margin: 5px 0;
-  box-shadow: 1px 1px 3px black;
-    border-radius: 10px;
+    text-decoration: none;
+      border-radius: 5px;
 }
 .btn:hover{
   background-color: #fa7f72;
   text-shadow: 1px 1px 3px black;
 }
-h5,h6{
+.input{
+    display: block;
+    width: 90%;
+    padding: 5px;
+    margin: 5px auto;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
+.input:hover{
+    box-shadow: 2px 0px 4px #1d2124;
+}
+h5{
 color: #393e46;
+margin: 5px;
 }
