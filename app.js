@@ -57,7 +57,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 passport.use(new GoogleStrategy({
     clientID: "1036886791345-5gooufjj7gd0mhge9dipp9lqglch19b9.apps.googleusercontent.com",
     clientSecret: "OXjbiMqc5xTS6-Cxaelt5rfc",
-    callbackURL: "http://localhost:3000/auth/google/todoApp"
+    callbackURL: "https://pradeep22-todolist.herokuapp.com/auth/google/todoApp"
       // userProfileURL:"http://www.googleapis.com/oauth2/v3/userinfo"
   },
 
