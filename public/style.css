@@ -4,11 +4,7 @@ html,body{
 }
 * {
   box-sizing: border-box;
-<<<<<<< HEAD
   font-family:sans-serif;
-=======
-  font-family: sans-serif;
->>>>>>> 3438353e7e654f0b25e9a235107d4d0b96217120
 }
 
 *:focus {

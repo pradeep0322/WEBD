@@ -18,10 +18,8 @@
     "https": "^1.0.0",
     "md5": "^2.3.0",
     "mongoose": "^5.10.14",
-    "mongoose-findorcreate": "^3.0.0",
     "node-fetch": "^2.6.1",
     "passport": "^0.4.1",
-    "passport-google-oauth20": "^2.0.0",
-    "passport-local": "^1.0.0"
+    "passport-google-oauth20": "^2.0.0"
   }
 }

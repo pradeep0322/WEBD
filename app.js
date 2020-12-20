@@ -7,7 +7,7 @@ const fetch=require("node-fetch");
 const md5 = require("md5");
 const app = express();
 const passport=require("passport");
-const findOrCreate = require('mongoose-findorcreate');
+
 ////////////////////////////////////////////////////////////////////////////////
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({
@@ -41,10 +41,10 @@ const userSchema = new mongoose.Schema({
 });
 
 const user = mongoose.model('user', userSchema);
-////////////////////////////////////////////oauth20 authenticattion using google
+////////////////////////////////////////////////////////////////////////////////
 
 app.use(passport.initialize());
-userSchema.plugin(findOrCreate);
+
 passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
@@ -127,8 +127,8 @@ app.post("/register", function(req, res) {
           } else {
             const newuser = new user({
               username: req.body.username,
-              password: md5(req.body.password),//////store hashcode of password for security
-              cityName:"Delhi",/////default cityName for weatherData
+              password: md5(req.body.password),
+              cityName:"Delhi",
               weatherData:"Weather is currently haze with temperature 19 Celcius and humidity 37% at Delhi"
             });
             newuser.save();
@@ -169,13 +169,13 @@ app.post("/login", function(req, res) {
   });
 });
 
-//////////////////////////////////function for shorting events by date specified
+////////////////////////////////////////////////////////////////////////////////
 function sortbydate(a,b){
   var dateA=new Date(a.date).getTime();
   var dateB=new Date(b.date).getTime();
   return dateA >= dateB ? 1 : -1;
 }
-///////////////////post request for refreshing weatherData and changing cityName
+////////////////////////////////////////////////////////////////////////////////
 app.post("/:username/weatherData", function(req, res) {
   user.findOne({username:req.params.username},function(err,founduser){
   if(err) console.log(err);
@@ -267,7 +267,7 @@ app.post("/:username/notes", function(req, res) {
     }
   });
 });
-//////////////////////////////function for weather data using openweathermap API
+////////////////////////////////////////////////////////////////////////////////
 async function getWeather(city) {
     const weather = await fetch(
     "https://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid=8a82db8d6312a6c85216829fe5dd0aa8"
